@@ -26,7 +26,6 @@ corr = df[columns].corr()["nsi"].sort_values(ascending=False)
 print("\nCorrelation:")
 print(round(corr[1:], 2))
 
-
 """Linear Regression Coefficients"""
 X = df[[ 'DENS','OUT', 'SS', 'IS', 'RIS', 'ABC', 'RBC', 'ACC',]]
 y = df["nsi"]
@@ -44,6 +43,3 @@ importance_rf = pd.Series(model.feature_importances_, index=X.columns)
 importance_rf  = importance_rf.sort_values(ascending=False)
 print("\nRandom Forest:")
 print(round(importance_rf, 3))
-
-
-
