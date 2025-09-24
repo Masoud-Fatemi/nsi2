@@ -6,6 +6,7 @@ Created on Tue Sep 23 23:25:22 2025
 """
 import pandas as pd
 from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
 
 df = pd.read_csv('data.csv')
 
@@ -30,8 +31,19 @@ print(round(corr[1:], 2))
 X = df[[ 'DENS','OUT', 'SS', 'IS', 'RIS', 'ABC', 'RBC', 'ACC',]]
 y = df["nsi"]
 model = LinearRegression().fit(X, y)
-importance_series = pd.Series(model.coef_, index=X.columns)
-importance  = importance_series.sort_values(ascending=False)
+importance_reg = pd.Series(model.coef_, index=X.columns)
+importance_reg  = importance_reg.sort_values(ascending=False)
 print("\nRegression:")
-print(round(importance, 3))
+print(round(importance_reg, 3))
+
+"""Tree-Based Models (e.g. Random Forest, XGBoost)"""
+X = df[[ 'DENS','OUT', 'SS', 'IS', 'RIS', 'ABC', 'RBC', 'ACC',]]
+y = df["nsi"]
+model = RandomForestRegressor().fit(X, y)
+importance_rf = pd.Series(model.feature_importances_, index=X.columns)
+importance_rf  = importance_rf.sort_values(ascending=False)
+print("\nRandom Forest:")
+print(round(importance_rf, 3))
+
+
 
