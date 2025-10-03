@@ -8,9 +8,13 @@ Created on Wed Sep 24 13:44:46 2025
 import pandas as pd
 
 save = True
+# country = 'au'
+# country = 'uk'
+country = 'us'
+
 df = pd.read_csv('data/df.csv')
-df = df[df['country']=='uk']
-uk = pd.read_csv('data/uk.csv')
+df = df[df['country']==country]
+country_df = pd.read_csv(f'data/{country}.csv')
 
 """combine csv and rename columns"""
 columns_new_names = {
@@ -25,19 +29,19 @@ columns_new_names = {
     'densities':'DENS'
     }
 # Rename columns
-uk.rename(columns=columns_new_names, inplace=True)
-uk['IS'] = uk['IS'].fillna(0)
+country_df.rename(columns=columns_new_names, inplace=True)
+country_df['IS'] = country_df['IS'].fillna(0)
 
 # Adding nsi lable
-uk = uk.merge(
+country_df = country_df.merge(
     df[["userids", "alpha-8"]],
     left_on="networkID",
     right_on="userids",
     how="left"
 )
 # Drop duplicate userids column
-uk.drop(columns="userids", inplace=True)
-uk.rename(columns={'alpha-8':'nsi'}, inplace=True)
+country_df.drop(columns="userids", inplace=True)
+country_df.rename(columns={'alpha-8':'nsi'}, inplace=True)
 
 if save:
-    uk.to_csv('output/uk.csv', index=False)
+    country_df.to_csv(f'output/{country}.csv', index=False)
