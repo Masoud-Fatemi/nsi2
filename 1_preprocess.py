@@ -7,10 +7,10 @@ Created on Wed Sep 24 13:44:46 2025
 """
 import pandas as pd
 
-save = True
-# country = 'au'
+save = False
+country = 'au'
 # country = 'uk'
-country = 'us'
+# country = 'us'
 
 df = pd.read_csv('data/df.csv')
 df = df[df['country']==country]
